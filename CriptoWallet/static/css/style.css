@@ -1,0 +1,10 @@
+header, footer {
+    font-size: 125%;
+    background-color: var(--primary-focus);
+    color: whitesmoke;
+    padding: var(--block-spacing-vertical);
+}
+
+.inactive {
+    display: none;
+}

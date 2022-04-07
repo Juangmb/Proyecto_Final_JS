@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>CriptoWallet</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            CABECERA
+        </div>
+    </header>
+    
+    <section id="cartera" class="container inactive" >
+        <h1>Mi Wallet</h1>
+        <table class="cartera">
+            <thead>
+                <tr>
+                    <th>Moneda</th>
+                    <th>Cantidad</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-cartera" class="container">
+                
+            </tbody>
+        </table>
+    </section>
+    <section id="transacciones" class="container inactive">
+        <h1>Historial Transacciones</h1>
+        <table class="cartera">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Moneda origen</th>
+                    <th>Cantidad origen</th>
+                    <th>Moneda destino</th>
+                    <th>Cantidad destino</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-transacciones" class="container">
+
+            </tbody>
+        </table>
+    </section>
+    <section id="compraventa" class="container inactive">
+        <h1>Compra/Venta</h1>
+        <form>
+            <label for="origen">Moneda Origen</label>
+            <select id="origen" required>
+                <option value selected="selected">Elige moneda...</option>
+                <option>ATOM</option>
+                <option>BCH</option>
+                <option>BNB</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>EUR</option>
+                <option>LINK</option>
+                <option>LUNA</option>
+                <option>SOL</option>
+                <option>USDT</option>
+            </select>
+            <label for="destino">Moneda Destino</label>
+            <select id="destino" required>
+                <option value selected="selected">Elige moneda...</option>
+                <option>ATOM</option>
+                <option>BCH</option>
+                <option>BNB</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>EUR</option>
+                <option>LINK</option>
+                <option>LUNA</option>
+                <option>SOL</option>
+                <option>USDT</option>
+            </select>
+        </form>
+    </section>
+    
+    <section class="container">
+        <h1 id="mensaje-inicio">Bienvenido, ¿Qué quieres hacer?</h1>
+        <div class="grid">
+            <button id="BTN-Wallet">Wallet</button><button id="BTN-Transaciones">Historial Transacciones</button><button id="BTN-CompraVenta">Comprar/Vender</button>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            @ 2022. Juan Gabriel Martínez
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

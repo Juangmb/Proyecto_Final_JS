@@ -1,0 +1,1 @@
+API_KEY = "Tu api key aquí"
