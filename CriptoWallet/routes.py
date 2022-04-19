@@ -1,7 +1,8 @@
 from CriptoWallet import app
 from CriptoWallet.ProcesaDatos import ProcesaDatos
-from flask import redirect, render_template, jsonify, request, url_for
+from flask import render_template, jsonify, request
 import sqlite3
+from CriptoWallet.pruebaFiltrar import rates
 
 ruta_db = app.config['RUTA_BBDD']
 data_manager = ProcesaDatos(ruta_db)
@@ -20,6 +21,15 @@ def cartera_virtual():
     datos = data_manager.recupera_wallet()
     return jsonify(datos)
 
-@app.route("/api/v01/exchange_rates/{}/{}")
+@app.route("/api/v01/exchange_rates")
 def exchange_rates():
-    return redirect("https://rest.coinapi.io/v1/exchangerate/{}/{}/?apikey=73FCB3D2-DDDE-46FB-A5C8-F507C0504765")
+    return jsonify(rates)
+
+@app.route("/api/v01/movimiento", methods=["UPDATE"])
+def transaccion():
+    datos = request.json
+    try:
+        data_manager.nueva_transaccion((datos["fecha"], datos["hora"], datos["from_moneda"], datos["from_cantidad"], datos["to_moneda"], datos["to_cantidad"]))
+        return jsonify({"status" : "succes"})
+    except sqlite3.Error as e:
+        return jsonify({"status" : "error", "msg" : str(e)})

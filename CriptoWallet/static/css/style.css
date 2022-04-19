@@ -8,3 +8,7 @@ header, footer {
 .inactive {
     display: none;
 }
+
+.botoninicio {
+    width: 5%
+}

@@ -49,7 +49,7 @@ class ProcesaDatos:
         return self.haz_consulta("""
                         SELECT transaction_id, fecha, hora, from_moneda, from_cantidad, to_moneda, to_cantidad
                         FROM transacciones
-                        ORDER BY fecha
+                        ORDER BY fecha, hora
                     """
         )
 
@@ -60,4 +60,26 @@ class ProcesaDatos:
                         ORDER BY moneda
                         """)
     
+    def recupera_fondos(self):
+        return self.haz_consulta("""
+                        SELECT moneda, cantidad
+                        FROM fondos
+                        """)
+
+    def recupera_rates(self):
+        "Acceder a coinAPI y crear diccionario solo con las monedas de la app"
+
+        return 
     
+    def nueva_transaccion(self, values):
+        return self.haz_consulta("""
+                        INSERT INTO transacciones (fecha, hora, from_moneda, from_cantidad, to_moneda, to_cantidad)
+                        values (?, ?, ?, ?, ?, ?)
+        """, values)
+
+    def update_cartera(self, values):
+        return self.haz_consulta("""
+                        UPDATE cartera_virtual
+                        SET cantidad_en_posesion = sumar la cantidad nueva, valor_compra = hacer media de la actual y la nueva
+                        WHERE moneda = moneda
+                            """)
