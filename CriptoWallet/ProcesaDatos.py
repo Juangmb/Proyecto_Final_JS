@@ -78,8 +78,10 @@ class ProcesaDatos:
         """, values)
 
     def update_cartera(self, values):
+        
         return self.haz_consulta("""
                         UPDATE cartera_virtual
-                        SET cantidad_en_posesion = sumar la cantidad nueva, valor_compra = hacer media de la actual y la nueva
-                        WHERE moneda = moneda
-                            """)
+                        SET cantidad_en_posesion = ?, valor_compra = ?
+                        WHERE moneda = ?
+                        values (?, ?, ?)
+                        """, values)

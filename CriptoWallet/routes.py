@@ -14,7 +14,7 @@ def inicio():
 @app.route("/api/v01/transacciones")
 def transacciones():
     datos = data_manager.recupera_transacciones()
-    return jsonify(datos)
+    return jsonify({"status" : "success", "data" : datos})
 
 @app.route("/api/v01/cartera_virtual")
 def cartera_virtual():
@@ -30,6 +30,7 @@ def transaccion():
     datos = request.json
     try:
         data_manager.nueva_transaccion((datos["fecha"], datos["hora"], datos["from_moneda"], datos["from_cantidad"], datos["to_moneda"], datos["to_cantidad"]))
-        return jsonify({"status" : "succes"})
+        data_manager.update_cartera((datos["to_cantidad"], datos["from_moneda"], datos["to_moneda"]))
+        return jsonify({"status" : "success"})
     except sqlite3.Error as e:
         return jsonify({"status" : "error", "msg" : str(e)})

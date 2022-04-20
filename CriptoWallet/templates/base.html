@@ -71,37 +71,37 @@
         <form name="compra" id="myForm">
             <div class="grid">
                 <label for="origen">Moneda Origen</label>
-                <select id="origen" required>
+                <select id="origen">
                     <option value selected="selected">Elige moneda...</option>
-                    <option>ATOM</option>
-                    <option>BCH</option>
-                    <option>BNB</option>
-                    <option>BTC</option>
-                    <option>ETH</option>
-                    <option>EUR</option>
-                    <option>LINK</option>
-                    <option>LUNA</option>
-                    <option>SOL</option>
-                    <option>USDT</option>
+                    <option id="atom-origen">ATOM</option>
+                    <option id="bch-origen">BCH</option>
+                    <option id="bnb-origen">BNB</option>
+                    <option id="btc-origen">BTC</option>
+                    <option id="eth-origen">ETH</option>
+                    <option id="eur-origen">EUR</option>
+                    <option id="link-origen">LINK</option>
+                    <option id="luna-origen">LUNA</option>
+                    <option id="sol-origen">SOL</option>
+                    <option id="usdt-origen">USDT</option>
                 </select>
-                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="">
+                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" required>
             </div>
             <div class="grid">
                 <label for="destino">Moneda Destino</label>
-                <select id="destino" required>
+                <select id="destino" disabled="true">
                     <option value selected="selected">Elige moneda...</option>
-                    <option>ATOM</option>
-                    <option>BCH</option>
-                    <option>BNB</option>
-                    <option>BTC</option>
-                    <option>ETH</option>
-                    <option>EUR</option>
-                    <option>LINK</option>
-                    <option>LUNA</option>
-                    <option>SOL</option>
-                    <option>USDT</option>
+                    <option id="atom-destino">ATOM</option>
+                    <option id="bch-destino">BCH</option>
+                    <option id="bnb-destino">BNB</option>
+                    <option id="btc-destino">BTC</option>
+                    <option id="eth-destino">ETH</option>
+                    <option id="eur-destino">EUR</option>
+                    <option id="link-destino">LINK</option>
+                    <option id="luna-destino">LUNA</option>
+                    <option id="sol-destino">SOL</option>
+                    <option id="usdt-destino">USDT</option>
                 </select>
-                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="">
+                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled>
             </div>
             
             <button id="submit">Aceptar</button>
