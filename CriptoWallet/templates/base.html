@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Filled">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <title>CriptoWallet</title>
 </head>
@@ -24,7 +24,7 @@
                 <tr>
                     <th>Criptomoneda</th>
                     <th>Cantidad</th>
-                    <th>Valor compra</th>
+                    <th>Valor actual</th>
                     <!--<th>Valor actual</th>-->
                 </tr>
             </thead>
@@ -71,7 +71,7 @@
         <form name="compra" id="myForm" required>
             <div class="grid">
                 <label for="origen">Moneda Origen</label>
-                <select id="origen">
+                <select id="origen" required>
                     <option value selected="selected">Elige moneda...</option>
                     <option id="atom-origen">ATOM</option>
                     <option id="bch-origen">BCH</option>
@@ -84,11 +84,11 @@
                     <option id="sol-origen">SOL</option>
                     <option id="usdt-origen">USDT</option>
                 </select>
-                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" required>
+                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" required>
             </div>
             <div class="grid">
                 <label for="destino">Moneda Destino</label>
-                <select id="destino" disabled="true">
+                <select id="destino" disabled="true" required>
                     <option value selected="selected">Elige moneda...</option>
                     <option id="atom-destino">ATOM</option>
                     <option id="bch-destino">BCH</option>
@@ -101,10 +101,15 @@
                     <option id="sol-destino">SOL</option>
                     <option id="usdt-destino">USDT</option>
                 </select>
-                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled>
+                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" required>
+                
+            </div>
+            <div>
+                <button id="calcular">Calcular</button>
+                <button id="submit">Aceptar</button>
+                <button id="cancelar">Cancelar</button>
             </div>
             
-            <button id="submit">Aceptar</button>
         </form>
     </section>
     

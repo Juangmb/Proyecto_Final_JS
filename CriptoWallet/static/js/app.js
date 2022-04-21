@@ -6,6 +6,130 @@ const peticionNuevo = new XMLHttpRequest()
 const peticionInvertido = new XMLHttpRequest()
 const peticionCarteraMaximo = new XMLHttpRequest()
 
+var rates = {
+    "ATOM": {
+      "ATOM": 1, 
+      "BCH": 0.07289380503283148, 
+      "BNB": 0.05792837341768437, 
+      "BTC": 0.0005776320856348577, 
+      "ETH": 0.007842371301665473, 
+      "EUR": 22.115001521691166, 
+      "LINK": 1.7297255493939008, 
+      "LUNA": 0.2478938490176412, 
+      "SOL": 0.2277296102074821, 
+      "USDT": 23.961938355536912
+    }, 
+    "BCH": {
+      "ATOM": 13.718586916262614, 
+      "BCH": 1, 
+      "BNB": 0.7946954256482199, 
+      "BTC": 0.007924295972403845, 
+      "ETH": 0.10758625233150136, 
+      "EUR": 303.38657052860026, 
+      "LINK": 23.729390290640332, 
+      "LUNA": 3.4007533137553927, 
+      "SOL": 3.1241284510379494, 
+      "USDT": 328.72393401256
+    }, 
+    "BNB": {
+      "ATOM": 17.26269772482029, 
+      "BCH": 1.2583437222937537, 
+      "BNB": 1, 
+      "BTC": 0.009971488090472056, 
+      "ETH": 0.13538048522645646, 
+      "EUR": 381.7645864528953, 
+      "LINK": 29.85972930608561, 
+      "LUNA": 4.279316583433778, 
+      "SOL": 3.931227424002912, 
+      "USDT": 413.647698732411
+    }, 
+    "BTC": {
+      "ATOM": 1731.205770712911, 
+      "BCH": 126.1941759220597, 
+      "BNB": 100.28593434870758, 
+      "BTC": 1, 
+      "ETH": 13.57675845351659, 
+      "EUR": 38285.618253676555, 
+      "LINK": 2994.5108528602814, 
+      "LUNA": 429.1552619435755, 
+      "SOL": 394.2468153533949, 
+      "USDT": 41483.04595857254
+    }, 
+    "ETH": {
+      "ATOM": 127.51245274342361, 
+      "BCH": 9.294867869537258, 
+      "BNB": 7.386588977925874, 
+      "BTC": 0.0736552840226, 
+      "ETH": 1, 
+      "EUR": 2819.938086455386, 
+      "LINK": 220.5615473761822, 
+      "LUNA": 31.60955270824736, 
+      "SOL": 29.03836115985984, 
+      "USDT": 3055.44553220123
+    }, 
+    "EUR": {
+      "ATOM": 0.04521817459606164, 
+      "BCH": 0.003296124802945851, 
+      "BNB": 0.0026194153032667077, 
+      "BTC": 2.6119468500524225e-05, 
+      "ETH": 0.0003546177147658525, 
+      "EUR": 1, 
+      "LINK": 0.07821503189576205, 
+      "LUNA": 0.011209307346169442, 
+      "SOL": 0.010297517275054987, 
+      "USDT": 1.0835151122207343
+    }, 
+    "LINK": {
+      "ATOM": 0.5781263971908156, 
+      "BCH": 0.04214183288116061, 
+      "BNB": 0.03348992181909008, 
+      "BTC": 0.00033394435656989695, 
+      "ETH": 0.004533881866064507, 
+      "EUR": 12.785266153604718, 
+      "LINK": 1, 
+      "LUNA": 0.1433139778183329, 
+      "SOL": 0.1316564990829204, 
+      "USDT": 13.853029091194971
+    }, 
+    "LUNA": {
+      "ATOM": 4.033984723553329, 
+      "BCH": 0.294052495944117, 
+      "BNB": 0.2336821734272315, 
+      "BTC": 0.002330159009285264, 
+      "ETH": 0.03163600602735155, 
+      "EUR": 89.21157829986079, 
+      "LINK": 6.977686442194885, 
+      "LUNA": 1, 
+      "SOL": 0.9186577686777371, 
+      "USDT": 96.66209327296248
+    }, 
+    "SOL": {
+      "ATOM": 4.391172492188917, 
+      "BCH": 0.3200892715111517, 
+      "BNB": 0.25437347986898334, 
+      "BTC": 0.0025364821250455, 
+      "ETH": 0.034437205133405216, 
+      "EUR": 97.1107863467663, 
+      "LINK": 7.59552325153486, 
+      "LUNA": 1.0885446507890988, 
+      "SOL": 1, 
+      "USDT": 105.22100456636024
+    }, 
+    "USDT": {
+      "ATOM": 0.04173285087218034, 
+      "BCH": 0.003042066294940945, 
+      "BNB": 0.0024175161691081973, 
+      "BTC": 2.4106233688786017e-05, 
+      "ETH": 0.0003272845120166719, 
+      "EUR": 0.9229220605427786, 
+      "LINK": 0.07218637840265586, 
+      "LUNA": 0.010345317033184007, 
+      "SOL": 0.009503805861968606, 
+      "USDT": 1
+    }
+  }
+  
+
 function listaCartera() {
     const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
     const monedas = ["ATOM", "BCH", "BNB", "BTC", "ETH", "LINK", "LUNA", "SOL", "USDT"]
@@ -129,10 +253,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "ATOM"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorATOM
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorATOM * rates["ATOM"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorBCH !== 0) {
             const fila = document.createElement("tr")
@@ -140,10 +266,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "BCH"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorBCH
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorBCH * rates["BCH"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorBNB !== 0) {
             const fila = document.createElement("tr")
@@ -151,10 +279,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "BNB"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorBNB
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorBNB * rates["BNB"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorBTC !== 0) {
             const fila = document.createElement("tr")
@@ -162,10 +292,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "BTC"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorBTC
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorBTC * rates["BTC"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorETH !== 0) {
             const fila = document.createElement("tr")
@@ -173,10 +305,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "ETH"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorETH
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorETH * rates["ETH"]["EUR"].toFixed(2)) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorLINK !== 0) {
             const fila = document.createElement("tr")
@@ -184,10 +318,12 @@ function listaCartera() {
             celdaCripto.innerHTML = "LINK"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorLINK
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorLINK * rates["LINK"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
         }
         if (contadorLUNA !== 0) {
             const fila = document.createElement("tr")
@@ -195,10 +331,13 @@ function listaCartera() {
             celdaCripto.innerHTML = "LUNA"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorLUNA
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorLUNA * rates["LUNA"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
+            
         }
         if (contadorSOL !== 0) {
             const fila = document.createElement("tr")
@@ -206,10 +345,13 @@ function listaCartera() {
             celdaCripto.innerHTML = "SOL"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorSOL
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorSOL * rates["SOL"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
+          
         }
         if (contadorUSDT !== 0) {
             const fila = document.createElement("tr")
@@ -217,10 +359,13 @@ function listaCartera() {
             celdaCripto.innerHTML = "USDT"
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorUSDT
+            const celdaValor = document.createElement("td")
+            celdaValor.innerHTML = (contadorUSDT * rates["USDT"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
+            fila.appendChild(celdaValor)
             tbody.appendChild(fila)
-            /*Calcular valor*/
+           
         }
     } else {
         alert("Se ha producido un error. Inténtelo de nuevo más tarde")
@@ -289,7 +434,7 @@ function clickTransacciones(ev) {
     peticionTransacciones.open("GET", "http://localhost:5000/api/v01/transacciones", true)
     peticionTransacciones.onload = listaTransacciones
     peticionTransacciones.send()
-    peticionInvertido.open("GET", "http://localhost:5000/api/v01/transacciones", false)
+    peticionInvertido.open("GET", "http://localhost:5000/api/v01/transacciones", true)
     peticionInvertido.onload = invertido
     peticionInvertido.send()
     document.querySelector("#mensaje-inicio").classList.add("inactive")
@@ -300,6 +445,9 @@ function clickTransacciones(ev) {
     document.querySelector("#BTN-Transaciones").classList.add("inactive")
     document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
     document.querySelector("#BTN-Inicio").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
 }
 
 const btnCartera = document.querySelector("#BTN-Wallet")
@@ -317,13 +465,19 @@ function clickCartera(ev) {
     document.querySelector("#BTN-Transaciones").classList.remove("inactive")
     document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
     document.querySelector("#BTN-Inicio").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
 }
 
 const btnCompraventa = document.querySelector("#BTN-CompraVenta")
 btnCompraventa.addEventListener("click", clickCompraventa)
 
 function clickCompraventa(ev) {
-    /* Funcion que consiga las exchange rates y calcule el cambio rellenando el input y poniendo maximo en funcion de la cantidad disponible*/
+    /*peticionRates.open("GET", "http://localhost:5000/api/v01/exchange_rates", false)
+    peticionRates.onload = recupera_rates
+    peticionRates.send()
+     Funcion que consiga las exchange rates y calcule el cambio rellenando el input y poniendo maximo en funcion de la cantidad disponible*/
     document.querySelector("#mensaje-inicio").classList.add("inactive")
     document.querySelector("#cartera").classList.add("inactive")
     document.querySelector("#transacciones").classList.add("inactive")
@@ -332,8 +486,12 @@ function clickCompraventa(ev) {
     document.querySelector("#BTN-Transaciones").classList.remove("inactive")
     document.querySelector("#BTN-CompraVenta").classList.add("inactive")
     document.querySelector("#BTN-Inicio").classList.remove("inactive")
-
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
 }
+
+document.querySelector("#cancelar").addEventListener("click", clickInicio)
 
 const btnInicio = document.querySelector("#BTN-Inicio")
 btnInicio.addEventListener("click", clickInicio)
@@ -347,17 +505,65 @@ function clickInicio(ev) {
     document.querySelector("#BTN-Wallet").classList.remove("inactive")
     document.querySelector("#BTN-Transaciones").classList.remove("inactive")
     document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
 }
+
+/*function recupera_rates() {
+    if (this.readyState === 4 && this.status === 200) {
+        const respuesta = JSON.parse(this.responseText)
+        rates = respuesta
+    } else {
+        alert("Se ha producido un error")
+    }
+}*/
+
+document.getElementById("destino").addEventListener("change", calcula_cambio_destino)
+/*document.getElementById("destino").addEventListener("change", calcula_cambio_origen)
+document.getElementById("origen").addEventListener("change", calcula_cambio_origen)*/
+document.getElementById("origen").addEventListener("change", calcula_cambio_destino)
+document.getElementById("cantidad_origen").addEventListener("change", calcula_cambio_destino)
+/*document.getElementById("cantidad_destino").addEventListener("change", calcula_cambio_origen)*/
+
+function calcula_cambio_destino() {
+    const seleccion_origen = document.getElementById("origen").selectedOptions
+    const seleccion_destino = document.getElementById("destino").selectedOptions
+
+    const moneda_origen = seleccion_origen.item(0).text
+    const moneda_destino = seleccion_destino.item(0).text
+    const cantidad_origen = document.getElementById("cantidad_origen").value
+    const cantidad_destino = document.getElementById("cantidad_destino")
+
+    const valor_destino = (cantidad_origen * rates[moneda_origen][moneda_destino]).toFixed(5)
+    cantidad_destino.setAttribute("value", valor_destino)
+}
+
+/*function calcula_cambio_origen() {
+    const seleccion_origen = document.getElementById("origen").selectedOptions
+    const seleccion_destino = document.getElementById("destino").selectedOptions
+
+    const moneda_origen = seleccion_origen.item(0).text
+    const moneda_destino = seleccion_destino.item(0).text
+    const cantidad_destino = document.getElementById("cantidad_destino").value
+    const cantidad_origen = document.getElementById("cantidad_origen")
+
+    const valor_origen = (cantidad_destino * rates[moneda_destino][moneda_origen]).toFixed(5)
+    cantidad_origen.setAttribute("value", valor_origen)
+}*/
+
+
 
 const form = document.getElementById("myForm")
 
 document.querySelector("#submit").addEventListener("click", (ev) => {
     ev.preventDefault()
+    /*Realizar verificacion para que los campos no esten vacios if */
     const fecha = new Date()
-    let h = fecha.getHours()
-    let m = fecha.getMinutes()
-    let s = fecha.getSeconds()
-    const time = h + ":" + m + ":" + s
+    let h = fecha.getHours().toString()
+    let m = fecha.getMinutes().toString()
+    let s = fecha.getSeconds().toString()
+    const time = h.padStart(2, "0") + ":" + m.padStart(2, "0") + ":" + s.padStart(2, "0")
     const date = fecha.toLocaleDateString()
 
     const transaccion = {
@@ -372,7 +578,9 @@ document.querySelector("#submit").addEventListener("click", (ev) => {
     peticionNuevo.onload = nuevaTransaccion
     peticionNuevo.setRequestHeader("Content-Type", "application/json")
     peticionNuevo.send(JSON.stringify(transaccion))
+    
     clickTransacciones()
+
     form.reset()
 })
 
@@ -395,6 +603,7 @@ function nuevaTransaccion() {
 
 document.getElementById("origen").addEventListener("change", seleccion_origen)
 document.getElementById("origen").addEventListener("change", maximo_a_gastar)
+
 
 function maximo_a_gastar () {
     peticionCarteraMaximo.open("GET", "http://localhost:5000/api/v01/transacciones", false)
@@ -546,6 +755,7 @@ function calcula_maximo() {
 
 function seleccion_origen () {
     document.getElementById("destino").removeAttribute("disabled")
+    document.getElementById("cantidad_origen").removeAttribute("disabled")
     const opciones = document.getElementById("origen")
     const seleccionado = opciones.selectedOptions
     if (seleccionado.item(0).text === "ATOM") {
@@ -663,9 +873,9 @@ function seleccion_origen () {
 
 }
 
-document.getElementById("cantidad_origen").addEventListener("change", calcula_rate)
+/*document.getElementById("cantidad_origen").addEventListener("change", calcula_rate)
 
 function calcula_rate() {
-    document.getElementById("cantidad_destino").removeAttribute("disabled")
-    /*Calcular destino en funcion del input de origen utilizando API rates, no quiero que se habilite para escribir*/
-}
+    Calcular destino en funcion del input de origen utilizando API rates, no quiero que se habilite para escribir
+}*/
+
