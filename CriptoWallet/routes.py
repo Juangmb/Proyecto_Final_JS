@@ -144,8 +144,12 @@ def transacciones():
 
 @app.route("/api/v01/exchange_rates")
 def exchange_rates():
-    """rates = hacer_peticion()"""
-    return jsonify(rates)
+  return jsonify({"status" : "success", "data" : rates})
+  """try: 
+      rates = hacer_peticion()
+      return jsonify({"status" : "success", "data" : rates})
+    except:
+      return jsonify({"status" : "fail", "mensaje" : "No se ha podido recuperar las rates"})"""
 
 @app.route("/api/v01/cartera")
 def cartera():

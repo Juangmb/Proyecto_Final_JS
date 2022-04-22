@@ -6,7 +6,17 @@ const peticionNuevo = new XMLHttpRequest()
 const peticionInvertido = new XMLHttpRequest()
 const peticionCarteraMaximo = new XMLHttpRequest()
 
-var rates = {
+var contadorATOM = 0
+var contadorBCH = 0
+var contadorBNB = 0
+var contadorBTC = 0
+var contadorETH = 0
+var contadorLINK = 0
+var contadorLUNA = 0
+var contadorSOL = 0
+var contadorUSDT = 0
+
+var rates = {/*
     "ATOM": {
       "ATOM": 1, 
       "BCH": 0.07289380503283148, 
@@ -126,13 +136,15 @@ var rates = {
       "LUNA": 0.010345317033184007, 
       "SOL": 0.009503805861968606, 
       "USDT": 1
-    }
+    }*/
   }
-  
 
-function listaCartera() {
+
+
+/*FUNCIONES CREAN TABLAS CARTERA TRANSACCIONES*/
+
+function listaCartera () {
     const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
-    const monedas = ["ATOM", "BCH", "BNB", "BTC", "ETH", "LINK", "LUNA", "SOL", "USDT"]
 
     if (this.readyState === 4 && this.status === 200) {
         const respuesta = JSON.parse(this.responseText)
@@ -252,7 +264,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "ATOM"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorATOM
+            celdaCantidad.innerHTML = contadorATOM.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorATOM * rates["ATOM"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -265,7 +277,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "BCH"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorBCH
+            celdaCantidad.innerHTML = contadorBCH.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBCH * rates["BCH"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -278,7 +290,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "BNB"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorBNB
+            celdaCantidad.innerHTML = contadorBNB.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBNB * rates["BNB"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -291,7 +303,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "BTC"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorBTC
+            celdaCantidad.innerHTML = contadorBTC.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBTC * rates["BTC"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -304,7 +316,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "ETH"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorETH
+            celdaCantidad.innerHTML = contadorETH.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorETH * rates["ETH"]["EUR"].toFixed(2)) + " €"
             fila.appendChild(celdaCripto)
@@ -317,7 +329,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "LINK"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorLINK
+            celdaCantidad.innerHTML = contadorLINK.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorLINK * rates["LINK"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -330,7 +342,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "LUNA"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorLUNA
+            celdaCantidad.innerHTML = contadorLUNA.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorLUNA * rates["LUNA"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -344,7 +356,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "SOL"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorSOL
+            celdaCantidad.innerHTML = contadorSOL.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorSOL * rates["SOL"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -358,7 +370,7 @@ function listaCartera() {
             const celdaCripto = document.createElement("td")
             celdaCripto.innerHTML = "USDT"
             const celdaCantidad = document.createElement("td")
-            celdaCantidad.innerHTML = contadorUSDT
+            celdaCantidad.innerHTML = contadorUSDT.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorUSDT * rates["USDT"]["EUR"]).toFixed(2) + " €"
             fila.appendChild(celdaCripto)
@@ -368,38 +380,11 @@ function listaCartera() {
            
         }
     } else {
-        alert("Se ha producido un error. Inténtelo de nuevo más tarde")
+        alert("Se ha producido un error contadores. Inténtelo de nuevo más tarde")
     }
 }
 
-function invertido() {
-    const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
-    if (this.readyState === 4 && this.status === 200) {
-        const respuesta = JSON.parse(this.responseText)
-        const transacciones = respuesta.data
-
-        const tbodyInv = document.querySelector("#tbody-inversion")
-        tbodyInv.innerHTML = ""
-        invertido = 0
-        for (let i = 0; i < transacciones.length; i++) {
-            if (transacciones[i]["from_moneda"] == "EUR") {
-                invertido += parseFloat(transacciones[i]["from_cantidad"])
-            } else if (transacciones[i]["to_moneda"] == "EUR") {
-                invertido -= parseFloat(transacciones[i]["to_cantidad"])
-            }
-        }
-        const filaInv = document.createElement("tr")
-        const celdaInv = document.createElement("td")
-        celdaInv.innerHTML = invertido
-        filaInv.appendChild(celdaInv)
-        tbodyInv.appendChild(filaInv)
-    } else {
-        alert("Se ha producido un error")
-    }
-
-}
-
-function listaTransacciones() {
+function listaTransacciones () {
     const campos = ["fecha", "hora", "from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
 
     if (this.readyState === 4 && this.status === 200) {
@@ -415,343 +400,66 @@ function listaTransacciones() {
             const fila = document.createElement("tr")
             const movimiento = transacciones[i]
             for (campo of campos) {
-                const celda = document.createElement("td")
-                celda.innerHTML = movimiento[campo]
-                fila.appendChild(celda)
+                if (campo === "from_cantidad" || campo === "to_cantidad") {
+                    const celda = document.createElement("td")
+                    celda.innerHTML = movimiento[campo].toFixed(2)
+                    fila.appendChild(celda)
+                } else {
+                    const celda = document.createElement("td")
+                    celda.innerHTML = movimiento[campo]
+                    fila.appendChild(celda)
+                }
             }
             tbody.appendChild(fila)
         }
         
     } else {
-        alert("Se ha producido un error. Inténtelo de nuevo más tarde")
+        alert("Se ha producido un error lista trans. Inténtelo de nuevo más tarde")
     }
 }
 
-const btnTransacciones = document.querySelector("#BTN-Transaciones")
-btnTransacciones.addEventListener("click", clickTransacciones)
-
-function clickTransacciones(ev) {
-    peticionTransacciones.open("GET", "http://localhost:5000/api/v01/transacciones", true)
-    peticionTransacciones.onload = listaTransacciones
-    peticionTransacciones.send()
-    peticionInvertido.open("GET", "http://localhost:5000/api/v01/transacciones", true)
-    peticionInvertido.onload = invertido
-    peticionInvertido.send()
-    document.querySelector("#mensaje-inicio").classList.add("inactive")
-    document.querySelector("#cartera").classList.add("inactive")
-    document.querySelector("#transacciones").classList.remove("inactive")
-    document.querySelector("#compraventa").classList.add("inactive")
-    document.querySelector("#BTN-Wallet").classList.remove("inactive")
-    document.querySelector("#BTN-Transaciones").classList.add("inactive")
-    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
-    document.querySelector("#BTN-Inicio").classList.remove("inactive")
-    document.getElementById("myForm").reset()
-    document.getElementById("cantidad_origen").setAttribute("value", "")
-    document.getElementById("cantidad_destino").setAttribute("value", "")
-}
-
-const btnCartera = document.querySelector("#BTN-Wallet")
-btnCartera.addEventListener("click", clickCartera)
-
-function clickCartera(ev) {
-    peticionCartera.open("GET", "http://localhost:5000/api/v01/transacciones", true)
-    peticionCartera.onload = listaCartera
-    peticionCartera.send()
-    document.querySelector("#mensaje-inicio").classList.add("inactive")
-    document.querySelector("#cartera").classList.remove("inactive")
-    document.querySelector("#transacciones").classList.add("inactive")
-    document.querySelector("#compraventa").classList.add("inactive")
-    document.querySelector("#BTN-Wallet").classList.add("inactive")
-    document.querySelector("#BTN-Transaciones").classList.remove("inactive")
-    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
-    document.querySelector("#BTN-Inicio").classList.remove("inactive")
-    document.getElementById("myForm").reset()
-    document.getElementById("cantidad_origen").setAttribute("value", "")
-    document.getElementById("cantidad_destino").setAttribute("value", "")
-}
-
-const btnCompraventa = document.querySelector("#BTN-CompraVenta")
-btnCompraventa.addEventListener("click", clickCompraventa)
-
-function clickCompraventa(ev) {
-    /*peticionRates.open("GET", "http://localhost:5000/api/v01/exchange_rates", false)
-    peticionRates.onload = recupera_rates
-    peticionRates.send()
-     Funcion que consiga las exchange rates y calcule el cambio rellenando el input y poniendo maximo en funcion de la cantidad disponible*/
-    document.querySelector("#mensaje-inicio").classList.add("inactive")
-    document.querySelector("#cartera").classList.add("inactive")
-    document.querySelector("#transacciones").classList.add("inactive")
-    document.querySelector("#compraventa").classList.remove("inactive")
-    document.querySelector("#BTN-Wallet").classList.remove("inactive")
-    document.querySelector("#BTN-Transaciones").classList.remove("inactive")
-    document.querySelector("#BTN-CompraVenta").classList.add("inactive")
-    document.querySelector("#BTN-Inicio").classList.remove("inactive")
-    document.getElementById("myForm").reset()
-    document.getElementById("cantidad_origen").setAttribute("value", "")
-    document.getElementById("cantidad_destino").setAttribute("value", "")
-}
-
-document.querySelector("#cancelar").addEventListener("click", clickInicio)
-
-const btnInicio = document.querySelector("#BTN-Inicio")
-btnInicio.addEventListener("click", clickInicio)
-
-function clickInicio(ev) {
-    document.querySelector("#BTN-Inicio").classList.add("inactive")
-    document.querySelector("#cartera").classList.add("inactive")
-    document.querySelector("#transacciones").classList.add("inactive")
-    document.querySelector("#compraventa").classList.add("inactive")
-    document.querySelector("#mensaje-inicio").classList.remove("inactive")
-    document.querySelector("#BTN-Wallet").classList.remove("inactive")
-    document.querySelector("#BTN-Transaciones").classList.remove("inactive")
-    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
-    document.getElementById("myForm").reset()
-    document.getElementById("cantidad_origen").setAttribute("value", "")
-    document.getElementById("cantidad_destino").setAttribute("value", "")
-}
-
-/*function recupera_rates() {
+function invertido () {
+    const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
     if (this.readyState === 4 && this.status === 200) {
         const respuesta = JSON.parse(this.responseText)
-        rates = respuesta
-    } else {
-        alert("Se ha producido un error")
-    }
-}*/
+        const transacciones = respuesta.data
 
-document.getElementById("destino").addEventListener("change", calcula_cambio_destino)
-/*document.getElementById("destino").addEventListener("change", calcula_cambio_origen)
-document.getElementById("origen").addEventListener("change", calcula_cambio_origen)*/
-document.getElementById("origen").addEventListener("change", calcula_cambio_destino)
-document.getElementById("cantidad_origen").addEventListener("change", calcula_cambio_destino)
-/*document.getElementById("cantidad_destino").addEventListener("change", calcula_cambio_origen)*/
-
-function calcula_cambio_destino() {
-    const seleccion_origen = document.getElementById("origen").selectedOptions
-    const seleccion_destino = document.getElementById("destino").selectedOptions
-
-    const moneda_origen = seleccion_origen.item(0).text
-    const moneda_destino = seleccion_destino.item(0).text
-    const cantidad_origen = document.getElementById("cantidad_origen").value
-    const cantidad_destino = document.getElementById("cantidad_destino")
-
-    const valor_destino = (cantidad_origen * rates[moneda_origen][moneda_destino]).toFixed(5)
-    cantidad_destino.setAttribute("value", valor_destino)
-}
-
-/*function calcula_cambio_origen() {
-    const seleccion_origen = document.getElementById("origen").selectedOptions
-    const seleccion_destino = document.getElementById("destino").selectedOptions
-
-    const moneda_origen = seleccion_origen.item(0).text
-    const moneda_destino = seleccion_destino.item(0).text
-    const cantidad_destino = document.getElementById("cantidad_destino").value
-    const cantidad_origen = document.getElementById("cantidad_origen")
-
-    const valor_origen = (cantidad_destino * rates[moneda_destino][moneda_origen]).toFixed(5)
-    cantidad_origen.setAttribute("value", valor_origen)
-}*/
-
-
-
-const form = document.getElementById("myForm")
-
-document.querySelector("#submit").addEventListener("click", (ev) => {
-    ev.preventDefault()
-    /*Realizar verificacion para que los campos no esten vacios if */
-    const fecha = new Date()
-    let h = fecha.getHours().toString()
-    let m = fecha.getMinutes().toString()
-    let s = fecha.getSeconds().toString()
-    const time = h.padStart(2, "0") + ":" + m.padStart(2, "0") + ":" + s.padStart(2, "0")
-    const date = fecha.toLocaleDateString()
-
-    const transaccion = {
-        fecha : date,
-        hora : time,
-        from_moneda : document.querySelector("#origen").value,
-        from_cantidad : document.querySelector("#cantidad_origen").value,
-        to_moneda : document.querySelector("#destino").value,
-        to_cantidad : document.querySelector("#cantidad_destino").value,
-    }
-    peticionNuevo.open("UPDATE", "/api/v01/movimiento", false)
-    peticionNuevo.onload = nuevaTransaccion
-    peticionNuevo.setRequestHeader("Content-Type", "application/json")
-    peticionNuevo.send(JSON.stringify(transaccion))
-    
-    clickTransacciones()
-
-    form.reset()
-})
-
-
-
-function nuevaTransaccion() {
-    if (this.readyState === 4 && this.status === 200) {
-        respuesta = JSON.parse(this.responseText)
-        if (respuesta.status === "success") {
-            peticionTransacciones.open("GET", "http://localhost:5000/api/v01/transacciones", true)
-            peticionTransacciones.onload = listaTransacciones
-            peticionTransacciones.send()
-        } else {
-            alert(respuesta.msg)
+        const tbodyInv = document.querySelector("#tbody-inversion")
+        tbodyInv.innerHTML = ""
+        inversion = 0
+        retorno = 0
+        for (let i = 0; i < transacciones.length; i++) {
+            if (transacciones[i]["from_moneda"] == "EUR") {
+                inversion += parseFloat(transacciones[i]["from_cantidad"])
+            } else if (transacciones[i]["to_moneda"] == "EUR") {
+                inversion -= parseFloat(transacciones[i]["to_cantidad"])
+            }
         }
+        const filaInv = document.createElement("tr")
+        const celdaInv = document.createElement("td")
+        celdaInv.innerHTML = inversion.toFixed(2) +" €"
+        filaInv.appendChild(celdaInv)
+        tbodyInv.appendChild(filaInv)
     } else {
-        alert("Se ha producido un error")
+        alert("Se ha producido un error invertido")
     }
+
 }
 
-document.getElementById("origen").addEventListener("change", seleccion_origen)
-document.getElementById("origen").addEventListener("change", maximo_a_gastar)
 
+/*FUNCION RECUPERA RATES PARA COMPRA/VENTA E INVERSION */
 
-function maximo_a_gastar () {
-    peticionCarteraMaximo.open("GET", "http://localhost:5000/api/v01/transacciones", false)
-    peticionCarteraMaximo.onload = calcula_maximo
-    peticionCarteraMaximo.send()
-}
-
-function calcula_maximo() {
+function recupera_rates () {
     if (this.readyState === 4 && this.status === 200) {
         const respuesta = JSON.parse(this.responseText)
-        const cartera = respuesta.data
-        const opciones = document.getElementById("origen")
-        const seleccionado = opciones.selectedOptions
-        const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
-
-        contadorATOM = 0
-        contadorBCH = 0
-        contadorBNB = 0
-        contadorBTC = 0
-        contadorETH = 0
-        contadorLINK = 0
-        contadorLUNA = 0
-        contadorSOL = 0
-        contadorUSDT = 0
-
-        for (let i = 0; i < cartera.length; i++) {
-            const activo = cartera[i]
-            for (campo of campos) {
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "ATOM") {
-                        contadorATOM -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "ATOM") {
-                        contadorATOM += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "BCH") {
-                        contadorBCH -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "BCH") {
-                        contadorBCH += activo["to_cantidad"]
-                    }
-                } 
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "BNB") {
-                        contadorBNB -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "BNB") {
-                        contadorBNB += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "BTC") {
-                        contadorBTC -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "BTC") {
-                        contadorBTC += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "ETH") {
-                        contadorETH -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "ETH") {
-                        contadorETH += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "LINK") {
-                        contadorLINK -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "LINK") {
-                        contadorLINK += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "LUNA") {
-                        contadorLUNA -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "LUNA") {
-                        contadorLUNA += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "SOL") {
-                        contadorSOL -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "SOL") {
-                        contadorSOL += activo["to_cantidad"]
-                    }
-                }
-                if (campo === "from_moneda") {
-                    if (activo[campo] === "USDT") {
-                        contadorUSDT -= activo["from_cantidad"]
-                    }
-                } if (campo === "to_moneda") {
-                    if (activo[campo] === "USDT") {
-                        contadorUSDT += activo["to_cantidad"]
-                    }
-                }
-            }
-        
-
-
-        for (let i = 0; i < cartera.length; i++) {
-            const activo = cartera[i]
-            if (activo["moneda"] === seleccionado.item(0).text) {
-                document.getElementById("cantidad_origen").setAttribute("max", activo["cantidad_en_posesion"])
-            }
-            
-        }
-        }
-
-        if (seleccionado.item(0).text === "ATOM") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorATOM)
-        } if (seleccionado.item(0).text === "BCH") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorBCH)
-        } if (seleccionado.item(0).text === "BNB") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorBNB)
-        } if (seleccionado.item(0).text === "BTC") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorBTC)
-        } if (seleccionado.item(0).text === "ETH") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorETH)
-        } if (seleccionado.item(0).text === "LINK") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorLINK)
-        } if (seleccionado.item(0).text === "LUNA") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorLUNA)
-        } if (seleccionado.item(0).text === "SOL") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorSOL)
-        } if (seleccionado.item(0).text === "USDT") {
-            document.getElementById("cantidad_origen").setAttribute("max", contadorUSDT)
-        } if (seleccionado.item(0).text === "EUR") {
-            document.getElementById("cantidad_origen").removeAttribute("max")
-        }
-
+        rates = respuesta.data
     } else {
-        alert("Error")
+        alert("Se ha producido un error rates")
     }
 }
+
+
+/*FUNCIONES COMPRA/VENTA */
 
 function seleccion_origen () {
     document.getElementById("destino").removeAttribute("disabled")
@@ -873,9 +581,393 @@ function seleccion_origen () {
 
 }
 
-/*document.getElementById("cantidad_origen").addEventListener("change", calcula_rate)
+function calcula_maximo () {
+    if (this.readyState === 4 && this.status === 200) {
+        const respuesta = JSON.parse(this.responseText)
+        const cartera = respuesta.data
+        const opciones = document.getElementById("origen")
+        const seleccionado = opciones.selectedOptions
+        const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
 
-function calcula_rate() {
-    Calcular destino en funcion del input de origen utilizando API rates, no quiero que se habilite para escribir
-}*/
+        contadorATOM = 0
+        contadorBCH = 0
+        contadorBNB = 0
+        contadorBTC = 0
+        contadorETH = 0
+        contadorLINK = 0
+        contadorLUNA = 0
+        contadorSOL = 0
+        contadorUSDT = 0
+
+        for (let i = 0; i < cartera.length; i++) {
+            const activo = cartera[i]
+            for (campo of campos) {
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "ATOM") {
+                        contadorATOM -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "ATOM") {
+                        contadorATOM += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "BCH") {
+                        contadorBCH -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "BCH") {
+                        contadorBCH += activo["to_cantidad"]
+                    }
+                } 
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "BNB") {
+                        contadorBNB -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "BNB") {
+                        contadorBNB += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "BTC") {
+                        contadorBTC -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "BTC") {
+                        contadorBTC += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "ETH") {
+                        contadorETH -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "ETH") {
+                        contadorETH += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "LINK") {
+                        contadorLINK -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "LINK") {
+                        contadorLINK += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "LUNA") {
+                        contadorLUNA -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "LUNA") {
+                        contadorLUNA += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "SOL") {
+                        contadorSOL -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "SOL") {
+                        contadorSOL += activo["to_cantidad"]
+                    }
+                }
+                if (campo === "from_moneda") {
+                    if (activo[campo] === "USDT") {
+                        contadorUSDT -= activo["from_cantidad"]
+                    }
+                } if (campo === "to_moneda") {
+                    if (activo[campo] === "USDT") {
+                        contadorUSDT += activo["to_cantidad"]
+                    }
+                }
+            }
+        
+
+
+        for (let i = 0; i < cartera.length; i++) {
+            const activo = cartera[i]
+            if (activo["moneda"] === seleccionado.item(0).text) {
+                document.getElementById("cantidad_origen").setAttribute("max", activo["cantidad_en_posesion"])
+            }
+            
+        }
+        }
+
+        if (seleccionado.item(0).text === "ATOM") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorATOM)
+            if (document.querySelector("#cantidad_origen").value > contadorATOM) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes ATOM")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "BCH") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorBCH)
+            if (document.querySelector("#cantidad_origen").value > contadorBCH) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes BCH")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "BNB") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorBNB)
+            if (document.querySelector("#cantidad_origen").value > contadorBNB) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes BNB")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "BTC") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorBTC)
+            if (document.querySelector("#cantidad_origen").value > contadorBTC) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes BTC")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "ETH") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorETH)
+            if (document.querySelector("#cantidad_origen").value > contadorETH) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes ETH")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "LINK") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorLINK)
+            if (document.querySelector("#cantidad_origen").value > contadorLINK) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes LINK")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "LUNA") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorLUNA)
+            if (document.querySelector("#cantidad_origen").value > contadorLUNA) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes LUNA")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "SOL") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorSOL)
+            if (document.querySelector("#cantidad_origen").value > contadorSOL) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes SOL")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "USDT") {
+            document.getElementById("cantidad_origen").setAttribute("max", contadorUSDT)
+            if (document.querySelector("#cantidad_origen").value > contadorUSDT) {
+                document.getElementById("submit").setAttribute("disabled", true)
+                alert("No dispones de suficientes USDT")
+            } else {
+                document.getElementById("submit").removeAttribute("disabled")
+            }
+            
+        } if (seleccionado.item(0).text === "EUR") {
+            document.getElementById("cantidad_origen").removeAttribute("max")
+            document.getElementById("submit").removeAttribute("disabled")
+        }
+
+    } else {
+        alert("Error")
+    }
+}
+
+function nuevaTransaccion () {
+    if (this.readyState === 4 && this.status === 200) {
+        respuesta = JSON.parse(this.responseText)
+        if (respuesta.status === "success") {
+            peticionTransacciones.open("GET", "http://localhost:5000/api/v01/transacciones", true)
+            peticionTransacciones.onload = listaTransacciones
+            peticionTransacciones.send()
+        } else {
+            alert(respuesta.msg)
+        }
+    } else {
+        alert("Se ha producido un error transaccion")
+    }
+}
+
+function calcula_cambio_destino(ev) {
+    ev.preventDefault()
+    const seleccion_origen = document.getElementById("origen").selectedOptions
+    const seleccion_destino = document.getElementById("destino").selectedOptions
+
+    const moneda_origen = seleccion_origen.item(0).text
+    const moneda_destino = seleccion_destino.item(0).text
+    const cantidad_origen = document.getElementById("cantidad_origen").value
+    const cantidad_destino = document.getElementById("cantidad_destino")
+
+    const valor_destino = (cantidad_origen * rates[moneda_origen][moneda_destino]).toFixed(5)
+    cantidad_destino.setAttribute("value", valor_destino)
+}
+
+function bloquea_aceptar () {
+    document.getElementById("submit").setAttribute("disabled", true)
+}
+
+function grabar_movimiento (ev) {
+    ev.preventDefault()
+    if (document.querySelector("#origen").value !== "" && document.querySelector("#cantidad_origen").value !== "" && document.querySelector("#destino").value !== "" && document.querySelector("#cantidad_destino").value !== "") {
+        const form = document.getElementById("myForm")
+        const fecha = new Date()
+        let h = fecha.getHours().toString()
+        let m = fecha.getMinutes().toString()
+        let s = fecha.getSeconds().toString()
+        const time = h.padStart(2, "0") + ":" + m.padStart(2, "0") + ":" + s.padStart(2, "0")
+        const date = fecha.toLocaleDateString()
+
+        const transaccion = {
+            fecha : date,
+            hora : time,
+            from_moneda : document.querySelector("#origen").value,
+            from_cantidad : document.querySelector("#cantidad_origen").value,
+            to_moneda : document.querySelector("#destino").value,
+            to_cantidad : document.querySelector("#cantidad_destino").value,
+        }
+        peticionNuevo.open("UPDATE", "/api/v01/movimiento", false)
+        peticionNuevo.onload = nuevaTransaccion
+        peticionNuevo.setRequestHeader("Content-Type", "application/json")
+        peticionNuevo.send(JSON.stringify(transaccion))
+        
+        clickTransacciones()
+
+        form.reset()
+        } else {
+            alert("Todos los campos deben rellenarse")
+        }
+}
+
+
+/*FUNCIONES PIDEN DATOS*/
+
+function pedir_transacciones () {
+    peticionTransacciones.open("GET", "http://localhost:5000/api/v01/transacciones", false)
+    peticionTransacciones.onload = listaTransacciones
+    peticionTransacciones.send()
+}
+
+function pedir_cartera () {
+    peticionCartera.open("GET", "http://localhost:5000/api/v01/transacciones", true)
+    peticionCartera.onload = listaCartera
+    peticionCartera.send()
+}
+
+function maximo_a_gastar () {
+    peticionCarteraMaximo.open("GET", "http://localhost:5000/api/v01/transacciones", false)
+    peticionCarteraMaximo.onload = calcula_maximo
+    peticionCarteraMaximo.send()
+}
+
+function pedir_rates () {
+    peticionRates.open("GET", "http://localhost:5000/api/v01/exchange_rates", false)
+    peticionRates.onload = recupera_rates
+    peticionRates.send()
+}
+
+function calculaInversion () {
+    peticionInvertido.open("GET", "http://localhost:5000/api/v01/transacciones", true)
+    peticionInvertido.onload = invertido
+    peticionInvertido.send()
+}
+
+
+/*CLICK INICIO CARTERA TRANSACCIONES COMPRAVENTA*/
+
+function clickInicio(ev) {
+    document.querySelector("#BTN-Inicio").classList.add("inactive")
+    document.querySelector("#cartera").classList.add("inactive")
+    document.querySelector("#transacciones").classList.add("inactive")
+    document.querySelector("#compraventa").classList.add("inactive")
+    document.querySelector("#mensaje-inicio").classList.remove("inactive")
+    document.querySelector("#BTN-Wallet").classList.remove("inactive")
+    document.querySelector("#BTN-Transacciones").classList.remove("inactive")
+    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
+}
+
+function clickCartera(ev) {
+    document.querySelector("#mensaje-inicio").classList.add("inactive")
+    document.querySelector("#cartera").classList.remove("inactive")
+    document.querySelector("#transacciones").classList.add("inactive")
+    document.querySelector("#compraventa").classList.add("inactive")
+    document.querySelector("#BTN-Wallet").classList.add("inactive")
+    document.querySelector("#BTN-Transacciones").classList.remove("inactive")
+    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
+    document.querySelector("#BTN-Inicio").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
+}
+
+function clickTransacciones(ev) {
+    document.querySelector("#mensaje-inicio").classList.add("inactive")
+    document.querySelector("#cartera").classList.add("inactive")
+    document.querySelector("#transacciones").classList.remove("inactive")
+    document.querySelector("#compraventa").classList.add("inactive")
+    document.querySelector("#BTN-Wallet").classList.remove("inactive")
+    document.querySelector("#BTN-Transacciones").classList.add("inactive")
+    document.querySelector("#BTN-CompraVenta").classList.remove("inactive")
+    document.querySelector("#BTN-Inicio").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
+}
+
+function clickCompraventa(ev) {
+    document.querySelector("#mensaje-inicio").classList.add("inactive")
+    document.querySelector("#cartera").classList.add("inactive")
+    document.querySelector("#transacciones").classList.add("inactive")
+    document.querySelector("#compraventa").classList.remove("inactive")
+    document.querySelector("#BTN-Wallet").classList.remove("inactive")
+    document.querySelector("#BTN-Transacciones").classList.remove("inactive")
+    document.querySelector("#BTN-CompraVenta").classList.add("inactive")
+    document.querySelector("#BTN-Inicio").classList.remove("inactive")
+    document.getElementById("myForm").reset()
+    document.getElementById("cantidad_origen").setAttribute("value", "")
+    document.getElementById("cantidad_destino").setAttribute("value", "")
+}
+
+
+/*LISTENERS*/
+
+document.getElementById("BTN-Inicio").addEventListener("click", clickInicio)
+
+document.getElementById("BTN-Wallet").addEventListener("click", clickCartera)
+document.getElementById("BTN-Wallet").addEventListener("click", pedir_rates)
+document.getElementById("BTN-Wallet").addEventListener("click", calculaInversion)
+document.getElementById("BTN-Wallet").addEventListener("click", pedir_cartera)
+
+document.getElementById("BTN-CompraVenta").addEventListener("click", clickCompraventa)
+
+document.getElementById("BTN-Transacciones").addEventListener("click", clickTransacciones)
+document.getElementById("BTN-Transacciones").addEventListener("click", pedir_transacciones)
+
+document.getElementById("origen").addEventListener("change", seleccion_origen)
+document.getElementById("cantidad_origen").addEventListener("change", bloquea_aceptar)
+
+document.getElementById("calcular").addEventListener("click", maximo_a_gastar)
+document.getElementById("calcular").addEventListener("click", pedir_rates,)
+document.getElementById("calcular").addEventListener("click", calcula_cambio_destino)
+
+document.getElementById("cancelar").addEventListener("click", clickInicio)
+
+document.getElementById("submit").addEventListener("click", maximo_a_gastar)
+document.getElementById("submit").addEventListener("click", grabar_movimiento)
 
