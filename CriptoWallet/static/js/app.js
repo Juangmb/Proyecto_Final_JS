@@ -439,7 +439,11 @@ function invertido () {
         const celdaInv = document.createElement("td")
         celdaInv.innerHTML = inversion.toFixed(2) +" €"
         filaInv.appendChild(celdaInv)
+        const celdaRetorno = document.createElement("td")
+        celdaRetorno.innerHTML = "Calcula Valor"
+        filaInv.appendChild(celdaRetorno)
         tbodyInv.appendChild(filaInv)
+        
     } else {
         alert("Se ha producido un error invertido")
     }
