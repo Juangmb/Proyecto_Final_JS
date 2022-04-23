@@ -1,10 +1,11 @@
+from telnetlib import STATUS
 from CriptoWallet import app
 from CriptoWallet.ProcesaDatos import ProcesaDatos
 from flask import render_template, jsonify, request
 import sqlite3
-from CriptoWallet.Api import hacer_peticion
+from Api.Api import hacer_peticion
 
-rates = {
+"""rates = {
   "ATOM": {
     "ATOM": 1, 
     "BCH": 0.07289380503283148, 
@@ -126,6 +127,8 @@ rates = {
     "USDT": 1
   }
 }
+"""
+
 
 ruta_db = app.config['RUTA_BBDD']
 data_manager = ProcesaDatos(ruta_db)
@@ -144,12 +147,12 @@ def transacciones():
 
 @app.route("/api/v01/exchange_rates")
 def exchange_rates():
-  return jsonify({"status" : "success", "data" : rates})
-  """try: 
+  """return jsonify({"status" : "success", "data" : rates})"""
+  try: 
       rates = hacer_peticion()
       return jsonify({"status" : "success", "data" : rates})
-    except:
-      return jsonify({"status" : "fail", "mensaje" : "No se ha podido recuperar las rates"})"""
+  except:
+      return jsonify({"status" : "fail", "mensaje" : "No se ha podido recuperar las rates"})
 
 @app.route("/api/v01/cartera")
 def cartera():

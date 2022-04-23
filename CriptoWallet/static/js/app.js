@@ -267,6 +267,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorATOM.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorATOM * rates["ATOM"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -280,6 +281,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorBCH.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBCH * rates["BCH"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -293,6 +295,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorBNB.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBNB * rates["BNB"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -306,6 +309,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorBTC.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorBTC * rates["BTC"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -318,7 +322,8 @@ function listaCartera () {
             const celdaCantidad = document.createElement("td")
             celdaCantidad.innerHTML = contadorETH.toFixed(2)
             const celdaValor = document.createElement("td")
-            celdaValor.innerHTML = (contadorETH * rates["ETH"]["EUR"].toFixed(2)) + " €"
+            celdaValor.innerHTML = (contadorETH * rates["ETH"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -332,6 +337,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorLINK.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorLINK * rates["LINK"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -345,6 +351,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorLUNA.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorLUNA * rates["LUNA"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -359,6 +366,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorSOL.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorSOL * rates["SOL"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -373,6 +381,7 @@ function listaCartera () {
             celdaCantidad.innerHTML = contadorUSDT.toFixed(2)
             const celdaValor = document.createElement("td")
             celdaValor.innerHTML = (contadorUSDT * rates["USDT"]["EUR"]).toFixed(2) + " €"
+            celdaValor.classList.add("ValorActual")
             fila.appendChild(celdaCripto)
             fila.appendChild(celdaCantidad)
             fila.appendChild(celdaValor)
@@ -426,8 +435,8 @@ function invertido () {
 
         const tbodyInv = document.querySelector("#tbody-inversion")
         tbodyInv.innerHTML = ""
-        inversion = 0
-        retorno = 0
+        let inversion = 0
+
         for (let i = 0; i < transacciones.length; i++) {
             if (transacciones[i]["from_moneda"] == "EUR") {
                 inversion += parseFloat(transacciones[i]["from_cantidad"])
@@ -435,12 +444,21 @@ function invertido () {
                 inversion -= parseFloat(transacciones[i]["to_cantidad"])
             }
         }
+
+        let sumatorio = 0
+        todos = document.getElementsByClassName("ValorActual")
+        for (let i = 0; i < todos.length; i++) {
+            sumatorio += parseFloat(todos[i].innerHTML)
+        }
         const filaInv = document.createElement("tr")
         const celdaInv = document.createElement("td")
         celdaInv.innerHTML = inversion.toFixed(2) +" €"
+        celdaInv.classList.add("InversionRealizada")
         filaInv.appendChild(celdaInv)
+
+        let retorno = sumatorio - inversion
         const celdaRetorno = document.createElement("td")
-        celdaRetorno.innerHTML = "Calcula Valor"
+        celdaRetorno.innerHTML = retorno.toFixed(2) + " €"
         filaInv.appendChild(celdaRetorno)
         tbodyInv.appendChild(filaInv)
         
@@ -866,7 +884,7 @@ function pedir_transacciones () {
 }
 
 function pedir_cartera () {
-    peticionCartera.open("GET", "http://localhost:5000/api/v01/transacciones", true)
+    peticionCartera.open("GET", "http://localhost:5000/api/v01/transacciones", false)
     peticionCartera.onload = listaCartera
     peticionCartera.send()
 }
@@ -959,12 +977,15 @@ document.getElementById("BTN-Wallet").addEventListener("click", calculaInversion
 document.getElementById("BTN-Wallet").addEventListener("click", pedir_cartera)
 
 document.getElementById("BTN-CompraVenta").addEventListener("click", clickCompraventa)
+document.getElementById("BTN-CompraVenta").addEventListener("click", bloquea_aceptar)
 
 document.getElementById("BTN-Transacciones").addEventListener("click", clickTransacciones)
 document.getElementById("BTN-Transacciones").addEventListener("click", pedir_transacciones)
 
 document.getElementById("origen").addEventListener("change", seleccion_origen)
 document.getElementById("cantidad_origen").addEventListener("change", bloquea_aceptar)
+
+document.getElementById("destino").addEventListener("change", bloquea_aceptar)
 
 document.getElementById("calcular").addEventListener("click", maximo_a_gastar)
 document.getElementById("calcular").addEventListener("click", pedir_rates,)

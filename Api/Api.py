@@ -1,13 +1,13 @@
 import json
 from flask import jsonify
 import requests
+from Api.config import API_KEY
+from Api import URL_TASA_EUR
 
-"correo Gmail" "73FCB3D2-DDDE-46FB-A5C8-F507C0504765"
-"correo Outlook" "BE6E11E3-8D05-46EB-90BF-A06A06E9AAB3"
-"correo TFM" "645DD70F-E72F-4135-A163-9680D6F5F3EE"
+
 
 def hacer_peticion():
-    respuesta = requests.get("https://rest.coinapi.io/v1/exchangerate/EUR/?apikey=BE6E11E3-8D05-46EB-90BF-A06A06E9AAB3")
+    respuesta = requests.get(URL_TASA_EUR.format(API_KEY))
 
     if respuesta.status_code == 200:
         string = respuesta.text
