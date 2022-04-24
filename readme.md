@@ -2,7 +2,7 @@
 
 ### Descripción
 
-CriptoWallet es una aplicación para simular la compraventa de criptomonedas y representar el estado de la inversión
+CriptoWallet es una aplicación para simular la compraventa de criptomonedas y proporcionar el valor en tiempo real de la misma
 
 ## Instrucciones
 
@@ -34,10 +34,10 @@ Crear una base de datos desde el mandato sql que se encuentra en Basedatos/crea_
 
 ### Renombrar archivos _template
 
-.env_template:
+1. .env_template:
     Renombrar a .env y establecer los parámetros indicando la ruta a la aplicación flask y seleccionando development o production
 
-config_template.py:
+2. config_template.py:
     Renombrar a config.py y añadir la ruta a la base de datos creada anteriormente y establecer una secret key
 
 ### Configurar Api
