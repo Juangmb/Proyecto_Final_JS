@@ -12,29 +12,30 @@
 </head>
 <body>
     <header>
-        
-        <div class="container">
-            <h1 class="cabecera">CriptoWallet</h1>
+        <div class="container botoninicio">
+            <button id="BTN-Inicio" class="inactive botoninicio"><span class="material-icons">home</span></button>
         </div>
     </header>
-    <div class="container">
-        <button id="BTN-Inicio" class="inactive botoninicio"><span class="material-icons">home</span></button>
-    </div>
+    
     <section id="cartera" class="container inactive" >
         <h1>Mi Wallet</h1>
-        <table class="cartera">
-            <thead>
-                <tr>
-                    <th>Criptomoneda</th>
-                    <th>Cantidad</th>
-                    <th>Valor actual</th>
-                    <!--<th>Valor actual</th>-->
-                </tr>
-            </thead>
-            <tbody id="tbody-cartera" class="container">
-                
-            </tbody>
-        </table>
+        <div id="wrapper">
+            <div id="scroll">
+                <table class="cartera">
+                    <thead>
+                        <tr>
+                            <th>Criptomoneda</th>
+                            <th>Cantidad</th>
+                            <th>Valor actual</th>
+                            <!--<th>Valor actual</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-cartera" class="container">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <table class="fondos">
             <thead>
                 <tr>
@@ -51,21 +52,25 @@
 
     <section id="transacciones" class="container inactive">
         <h1>Historial Transacciones</h1>
-        <table class="cartera">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Moneda origen</th>
-                    <th>Cantidad origen</th>
-                    <th>Moneda destino</th>
-                    <th>Cantidad destino</th>
-                </tr>
-            </thead>
-            <tbody id="tbody-transacciones" class="container tablas">
+        <div id="wrapper">
+            <div id="scroll">
+                <table class="transacciones">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Moneda origen</th>
+                            <th>Cantidad origen</th>
+                            <th>Moneda destino</th>
+                            <th>Cantidad destino</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-transacciones" class="container tablas">
 
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 
     

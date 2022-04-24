@@ -2,7 +2,7 @@ header  {
     font-size: 125%;
     background-color: var(--primary-focus);
     color: whitesmoke;
-    height: fit-content;
+    height: 10%;
 }
 
 .inactive {
@@ -10,20 +10,20 @@ header  {
 }
 
 .botoninicio {
-    width: 60px;
-    height: 60px;
-    margin-top: 3%;
+    width: 55px;
+    height: 55px;
+    margin-top: -1%;
+    margin-bottom: 0px;
+
+    align-self: center;
 }
 
 footer {
     font-size: 125%;
     background-color: var(--primary-focus);
-    position: bottom;
-}
-
-.cabecera {
-    margin: auto;
-    text-align: center
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 h1 {
@@ -38,8 +38,11 @@ h1 {
     margin-right: auto; 
 }
 
-.cartera {
-    color: black;
-    max-height: 50%;
-    overflow-y: auto;
+#scroll {
+    max-height: 40%;
+    overflow: auto;
+}
+
+#wrapper {
+    position: relative
 }
