@@ -12,11 +12,14 @@
 </head>
 <body>
     <header>
+        
         <div class="container">
-            <button id="BTN-Inicio" class="inactive botoninicio"><span class="material-icons">home</span></button>
+            <h1 class="cabecera">CriptoWallet</h1>
         </div>
     </header>
-    
+    <div class="container">
+        <button id="BTN-Inicio" class="inactive botoninicio"><span class="material-icons">home</span></button>
+    </div>
     <section id="cartera" class="container inactive" >
         <h1>Mi Wallet</h1>
         <table class="cartera">
@@ -59,7 +62,7 @@
                     <th>Cantidad destino</th>
                 </tr>
             </thead>
-            <tbody id="tbody-transacciones" class="container">
+            <tbody id="tbody-transacciones" class="container tablas">
 
             </tbody>
         </table>
@@ -68,10 +71,10 @@
     
     <section id="compraventa" class="container inactive">
         <h1>Compra/Venta</h1>
-        <form name="compra" id="myForm" required>
+        <form name="compra" id="myForm" >
             <div class="grid">
                 <label for="origen">Moneda Origen</label>
-                <select id="origen" required>
+                <select id="origen" >
                     <option value selected="selected">Elige moneda...</option>
                     <option id="atom-origen">ATOM</option>
                     <option id="bch-origen">BCH</option>
@@ -84,11 +87,11 @@
                     <option id="sol-origen">SOL</option>
                     <option id="usdt-origen">USDT</option>
                 </select>
-                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" required>
+                <input id="cantidad_origen" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" >
             </div>
             <div class="grid">
                 <label for="destino">Moneda Destino</label>
-                <select id="destino" disabled="true" required>
+                <select id="destino" disabled="true" >
                     <option value selected="selected">Elige moneda...</option>
                     <option id="atom-destino">ATOM</option>
                     <option id="bch-destino">BCH</option>
@@ -101,7 +104,7 @@
                     <option id="sol-destino">SOL</option>
                     <option id="usdt-destino">USDT</option>
                 </select>
-                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" required>
+                <input id="cantidad_destino" inputmode="decimal" type="number" min="0" step="0.01" placeholder="0.00" value="" disabled="true" >
                 
             </div>
             <div>
@@ -113,8 +116,12 @@
         </form>
     </section>
     
+    <section class="container" id="mensaje-inicio">
+        <h1>Bienvenido, ¿Qué quieres hacer?</h1>
+        <img class="imagen" src="https://d3lkc3n5th01x7.cloudfront.net/wp-content/uploads/2021/10/22005930/Crypto-Wallet-Development-Solution.svg">
+        
+    </section>
     <section class="container">
-        <h1 id="mensaje-inicio">Bienvenido, ¿Qué quieres hacer?</h1>
         <div class="grid">
             <button id="BTN-Wallet">Wallet</button><button id="BTN-Transacciones">Historial Transacciones</button><button id="BTN-CompraVenta">Comprar/Vender</button>
         </div>

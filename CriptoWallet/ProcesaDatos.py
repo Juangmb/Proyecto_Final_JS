@@ -64,7 +64,7 @@ class ProcesaDatos:
                         values (?, ?, ?, ?, ?, ?)
         """, values)
 
-    def verifica_cantidad(self, datos):
+    def recuenta_monedas(self):
         respuesta = requests.get("http://localhost:5000/api/v01/transacciones")
         dic = json.loads(respuesta.text)
         data = dic["data"]
@@ -124,24 +124,41 @@ class ProcesaDatos:
                 contadorUSDT += data[i]["to_cantidad"]
             if data[i]["from_moneda"] == "USDT":
                 contadorUSDT -= data[i]["from_cantidad"]
+        
+        monedas = {
+            "ATOM" : contadorATOM,
+            "BCH" : contadorBCH,
+            "BNB" : contadorBNB,
+            "BTC" : contadorBTC,
+            "ETH" : contadorETH,
+            "LINK" : contadorLINK,
+            "LUNA" : contadorLUNA,
+            "SOL" : contadorSOL,
+            "USDT" : contadorUSDT,
+        }
 
-        if datos["from_moneda"] == "ATOM" and datos["from-cantidad"] > contadorATOM:
+        return monedas
+
+    def verifica_cantidad(self, datos):
+        monedas = self.recuenta_monedas()
+
+        if datos["from_moneda"] == "ATOM" and float(datos["from_cantidad"]) > monedas["ATOM"]:
             return False
-        if datos["from_moneda"] == "BCH" and datos["from-cantidad"] > contadorBCH:
+        if datos["from_moneda"] == "BCH" and float(datos["from_cantidad"]) > monedas["BCH"]:
             return False
-        if datos["from_moneda"] == "BNB" and datos["from-cantidad"] > contadorBNB:
+        if datos["from_moneda"] == "BNB" and float(datos["from_cantidad"]) > monedas["BNB"]:
             return False
-        if datos["from_moneda"] == "BTC" and datos["from-cantidad"] > contadorBTC:
+        if datos["from_moneda"] == "BTC" and float(datos["from_cantidad"]) > monedas["BTC"]:
             return False
-        if datos["from_moneda"] == "ETH" and datos["from-cantidad"] > contadorETH:
+        if datos["from_moneda"] == "ETH" and float(datos["from_cantidad"]) > monedas["ETH"]:
             return False
-        if datos["from_moneda"] == "LINK" and datos["from-cantidad"] > contadorLINK:
+        if datos["from_moneda"] == "LINK" and float(datos["from_cantidad"]) > monedas["LINK"]:
             return False
-        if datos["from_moneda"] == "LUNA" and datos["from-cantidad"] > contadorLUNA:
+        if datos["from_moneda"] == "LUNA" and float(datos["from_cantidad"]) > monedas["LUNA"]:
             return False
-        if datos["from_moneda"] == "SOL" and datos["from-cantidad"] > contadorSOL:
+        if datos["from_moneda"] == "SOL" and float(datos["from_cantidad"]) > monedas["SOL"]:
             return False
-        if datos["from_moneda"] == "USDT" and datos["from-cantidad"] > contadorUSDT:
+        if datos["from_moneda"] == "USDT" and float(datos["from_cantidad"]) > monedas["USDT"]:
             return False
         else:
             return True
@@ -158,91 +175,35 @@ class ProcesaDatos:
             if transacciones[i]["to_moneda"] == "EUR":
                 invertido -= transacciones[i]["to_cantidad"]
 
-        contadorATOM = 0
-        contadorBCH = 0
-        contadorBNB = 0
-        contadorBTC = 0
-        contadorETH = 0
-        contadorLINK = 0
-        contadorLUNA = 0
-        contadorSOL = 0
-        contadorUSDT = 0
-
-        for i in range(0, len(transacciones)):
-            if transacciones[i]["to_moneda"] == "ATOM":
-                contadorATOM += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "ATOM":
-                contadorATOM -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "BCH":
-                contadorBCH += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "BCH":
-                contadorBCH -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "BNB":
-                contadorBNB += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "BNB":
-                contadorBNB -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "BTC":
-                contadorBTC += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "BTC":
-                contadorBTC -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "ETH":
-                contadorETH += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "ETH":
-                contadorETH -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "LINK":
-                contadorLINK += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "LINK":
-                contadorLINK -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "LUNA":
-                contadorLUNA += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "LUNA":
-                contadorLUNA -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "SOL":
-                contadorSOL += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "SOL":
-                contadorSOL -= transacciones[i]["from_cantidad"]
-
-            if transacciones[i]["to_moneda"] == "USDT":
-                contadorUSDT += transacciones[i]["to_cantidad"]
-            if transacciones[i]["from_moneda"] == "USDT":
-                contadorUSDT -= transacciones[i]["from_cantidad"]
-
+        monedas = self.recuenta_monedas()
         rates = hacer_peticion()
         dicRates = json.loads(rates.data)
         valor_actual = 0
-        if contadorATOM > 0:
-            valor_actual += contadorATOM * dicRates["data"]["ATOM"]["EUR"]
-        if contadorBCH > 0:
-            valor_actual += contadorBCH * dicRates["data"]["BCH"]["EUR"]
-        if contadorBNB > 0:
-            valor_actual += contadorBNB * dicRates["data"]["BNB"]["EUR"]
-        if contadorBTC > 0:
-            valor_actual += contadorBTC * dicRates["data"]["BTC"]["EUR"]
-        if contadorETH > 0:
-            valor_actual += contadorETH * dicRates["data"]["ETH"]["EUR"]
-        if contadorLINK > 0:
-            valor_actual += contadorLINK * dicRates["data"]["LINK"]["EUR"]
-        if contadorLUNA > 0:
-            valor_actual += contadorLUNA * dicRates["data"]["LUNA"]["EUR"]
-        if contadorSOL > 0:
-            valor_actual += contadorSOL * dicRates["data"]["SOL"]["EUR"]
-        if contadorUSDT > 0:
-            valor_actual += contadorUSDT * dicRates["data"]["USDT"]["EUR"]
-
-
+        if monedas["ATOM"] > 0:
+            valor_actual += monedas["ATOM"] * dicRates["data"]["ATOM"]["EUR"]
+        if monedas["BCH"] > 0:
+            valor_actual += monedas["BCH"] * dicRates["data"]["BCH"]["EUR"]
+        if monedas["BNB"] > 0:
+            valor_actual += monedas["BNB"] * dicRates["data"]["BNB"]["EUR"]
+        if monedas["BTC"] > 0:
+            valor_actual += monedas["BTC"] * dicRates["data"]["BTC"]["EUR"]
+        if monedas["ETH"] > 0:
+            valor_actual += monedas["ETH"] * dicRates["data"]["ETH"]["EUR"]
+        if monedas["LINK"] > 0:
+            valor_actual += monedas["LINK"] * dicRates["data"]["LINK"]["EUR"]
+        if monedas["LUNA"] > 0:
+            valor_actual += monedas["LUNA"] * dicRates["data"]["LUNA"]["EUR"]
+        if monedas["SOL"] > 0:
+            valor_actual += monedas["SOL"] * dicRates["data"]["SOL"]["EUR"]
+        if monedas["USDT"] > 0:
+            valor_actual += monedas["USDT"] * dicRates["data"]["USDT"]["EUR"]
 
         resultado = {
             "status" : "success",
             "data" : {
                 "invertido" : invertido,
-                "valor_actual" : valor_actual
+                "valor_actual" : valor_actual,
+                "monedas_en_posesion" : monedas
             }
         }
         return jsonify(resultado)
