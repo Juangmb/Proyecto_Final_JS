@@ -147,24 +147,28 @@ def transacciones():
 
 @app.route("/api/v01/exchange_rates")
 def exchange_rates():
-  """return jsonify({"status" : "success", "data" : rates})"""
-  try: 
-      rates = hacer_peticion()
-      return jsonify({"status" : "success", "data" : rates})
-  except:
-      return jsonify({"status" : "fail", "mensaje" : "No se ha podido recuperar las rates"})
-
-@app.route("/api/v01/cartera")
-def cartera():
-    pass    #  archivo.py con funcion que recuente las monedas que tenemos en este momento, 
-            #  asi no tengo que hacer los contadores con js y puedo acceder con una peticion para pintar la cartera
+  rates = hacer_peticion()
+  return rates
 
 @app.route("/api/v01/movimiento", methods=["UPDATE"])
 def transaccion():
     datos = request.json
-    try:
-        data_manager.nueva_transaccion((datos["fecha"], datos["hora"], datos["from_moneda"], datos["from_cantidad"], datos["to_moneda"], datos["to_cantidad"]))
-        """data_manager.update_cartera((datos["to_cantidad"], datos["from_moneda"], datos["to_moneda"]))"""
-        return jsonify({"status" : "success"})
-    except sqlite3.Error as e:
-        return jsonify({"status" : "error", "msg" : str(e)})
+    if data_manager.verifica_cantidad(datos):
+      try:
+          data_manager.nueva_transaccion((datos["fecha"], datos["hora"], datos["from_moneda"], datos["from_cantidad"], datos["to_moneda"], datos["to_cantidad"]))
+          from_moneda = datos["from_moneda"]
+          to_moneda = datos["to_moneda"]
+          return jsonify({"status" : "success", "monedas" : f"{from_moneda},{to_moneda}"})
+      except sqlite3.Error as e:
+          return jsonify({"status" : "error", "msg" : str(e)})
+    
+    else: 
+      return jsonify({"status" : "error", "msg" : "No dispones de la cantidad necesaria para realizar la operacion"})
+
+@app.route("/api/v01/status")
+def estado_inversion():
+  try:
+    status = data_manager.status()
+    return status
+  except:
+    return jsonify({"status" : "fail", "mensaje" :"Se ha producido un error al recuperar el estado de la inversion"})

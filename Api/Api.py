@@ -131,17 +131,19 @@ def hacer_peticion():
         rates["USDT"]["SOL"] =  (1 / rates["EUR"]["USDT"]) / (1 / rates["EUR"]["SOL"])
         rates["USDT"]["ATOM"] =  (1 / rates["EUR"]["USDT"]) / (1 / rates["EUR"]["ATOM"])
         
-        return rates
-
+        return jsonify({"status" : "success", "data" : rates})
+    
     elif respuesta.status_code == 400:
-        return("Hay algo erróneo en tu petición")
+        return jsonify({"status" : "fail", "mensaje" : "Hay algo erroneo en tu peticion"})
     elif respuesta.status_code == 401:
-        return("No autorizado - Tu APIkey es errónea")
+        return jsonify({"status" : "fail", "mensaje" : "No autorizado - Tu API KEY es erronea"})
     elif respuesta.status_code == 403:
-        return("Prohibido - Tu API no tiene acceso a esta funcionalidad")
+        return jsonify({"status" : "fail", "mensaje" : "Prohibido - Tu API no tiene acceso a esta funcionalidad"})
     elif respuesta.status_code == 429:
-        return("Has excedido el limite de peticiones de tu API key")
+        return jsonify({"status" : "fail", "mensaje" : "Has excedido el limite de peticiones de tu API key"})
+    elif respuesta.status_code == 500:
+        return jsonify({"status" : "fail", "mensaje" : "Se ha producido un error en la URL de consulta"})
     elif respuesta.status_code == 550:
-        return("Sin datos - La moneda pedida no existe en nuestra base de datos")
+        return jsonify({"status" : "fail", "mensaje" : "Sin datos - La moneda pedida no existe en nuestra base de datos"})
     else:
-        return("Se ha producido un error desconocido")
+        return jsonify({"status" : "fail", "mensaje" : "Se ha producido un error desconocido"})

@@ -5,6 +5,7 @@ const peticionRates = new XMLHttpRequest()
 const peticionNuevo = new XMLHttpRequest()
 const peticionInvertido = new XMLHttpRequest()
 const peticionCarteraMaximo = new XMLHttpRequest()
+const peticionStatus = new XMLHttpRequest()
 
 var contadorATOM = 0
 var contadorBCH = 0
@@ -427,7 +428,7 @@ function listaTransacciones () {
     }
 }
 
-function invertido () {
+/*function invertido () {
     const campos = ["from_moneda", "from_cantidad", "to_moneda", "to_cantidad"]
     if (this.readyState === 4 && this.status === 200) {
         const respuesta = JSON.parse(this.responseText)
@@ -467,8 +468,17 @@ function invertido () {
     }
 
 }
+*/
 
-
+function invertido () {
+    if (this.readyState === 4 && this.status === 200) {
+        const respuesta = JSON.parse(this.responseText)
+        const status = respuesta.data
+        
+        const tbodyInv = document.querySelector("#tbody-inversion")
+        tbodyInv.innerHTML = "HOlA", status["data"][0]["invertido"]
+    }
+}
 /*FUNCION RECUPERA RATES PARA COMPRA/VENTA E INVERSION */
 
 function recupera_rates () {
@@ -901,10 +911,16 @@ function pedir_rates () {
     peticionRates.send()
 }
 
-function calculaInversion () {
+/*function calculaInversion () {
     peticionInvertido.open("GET", "http://localhost:5000/api/v01/transacciones", true)
     peticionInvertido.onload = invertido
     peticionInvertido.send()
+}*/
+
+function pedir_estado () {
+    peticionStatus.open("GET", "http://localhost:5000/api/v01/status", false)
+    peticionStatus.onload = invertido
+    peticionStatus.send()
 }
 
 
@@ -973,7 +989,7 @@ document.getElementById("BTN-Inicio").addEventListener("click", clickInicio)
 
 document.getElementById("BTN-Wallet").addEventListener("click", clickCartera)
 document.getElementById("BTN-Wallet").addEventListener("click", pedir_rates)
-document.getElementById("BTN-Wallet").addEventListener("click", calculaInversion)
+document.getElementById("BTN-Wallet").addEventListener("click", pedir_estado)
 document.getElementById("BTN-Wallet").addEventListener("click", pedir_cartera)
 
 document.getElementById("BTN-CompraVenta").addEventListener("click", clickCompraventa)
